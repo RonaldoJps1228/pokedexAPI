@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,8 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var pokeApi =
-      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
+  // var pokeApi =
+  //     "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
   List? pokedex = [];
 
   @override
@@ -57,13 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
             pokedex != null
                 ? Expanded(
                     child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 1.4,
                       ),
                       itemCount: pokedex!.length,
                       itemBuilder: (context, index) {
                         var type = pokedex![index]['type'][0];
+                        var pokemonId = pokedex![index]['id'];
+                        var pokemonImageUrl =
+                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png";
                         return InkWell(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -82,7 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ? const Color.fromARGB(
                                                           255, 132, 99, 51)
                                                       : type == "Ground"
-                                                          ? const Color.fromRGBO(
+                                                          ? const Color
+                                                              .fromRGBO(
                                                               221, 171, 54, 1)
                                                           : type == "Psychic"
                                                               ? Colors.pink
@@ -151,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Hero(
                                       tag: index,
                                       child: CachedNetworkImage(
-                                          imageUrl: pokedex![index]['img'],
+                                          imageUrl: pokemonImageUrl,
                                           height: 100,
                                           fit: BoxFit.fitHeight),
                                     )),
@@ -178,10 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               : type == "Ground"
                                                                   ? const Color
                                                                       .fromRGBO(
-                                                                          221,
-                                                                          171,
-                                                                          54,
-                                                                          1)
+                                                                      221,
+                                                                      171,
+                                                                      54,
+                                                                      1)
                                                                   : type ==
                                                                           "Psychic"
                                                                       ? Colors
@@ -218,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchPokemonData() {
-    var url = Uri.http("raw.githubusercontent.com",
+    var url = Uri.https("raw.githubusercontent.com",
         "/Biuni/PokemonGO-Pokedex/master/pokedex.json");
 
     http.get(url).then((value) {
