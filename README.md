@@ -1,5 +1,3 @@
-
-https://github.com/RonaldoJps1228/pokedexAPI/assets/114714102/e0b20554-eacc-4741-a1e2-3c070c96c22e
 # test_pokedex
 
 A new Flutter project.
